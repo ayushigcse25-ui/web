@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <circle cx="50" cy="50" r="48" fill="#ffffff" stroke="#0f3a68" stroke-width="2"/>
+  <circle cx="50" cy="50" r="44" fill="#f8fafc" stroke="#f59e0b" stroke-width="1.5"/>
+  <!-- Ashoka Chakra Spokes Simplified -->
+  <circle cx="50" cy="50" r="16" fill="none" stroke="#0d47a1" stroke-width="1.5"/>
+  <circle cx="50" cy="50" r="4" fill="#0d47a1"/>
+  <!-- 24 stylized spokes -->
+  <g stroke="#0d47a1" stroke-width="1" stroke-linecap="round">
+    <line x1="50" y1="34" x2="50" y2="66"/>
+    <line x1="34" y1="50" x2="66" y2="50"/>
+    <line x1="38.7" y1="38.7" x2="61.3" y2="61.3"/>
+    <line x1="38.7" y1="61.3" x2="61.3" y2="38.7"/>
+    <line x1="44.2" y1="34.8" x2="55.8" y2="65.2"/>
+    <line x1="55.8" y1="34.8" x2="44.2" y2="65.2"/>
+    <line x1="34.8" y1="44.2" x2="65.2" y2="55.8"/>
+    <line x1="34.8" y1="55.8" x2="65.2" y2="44.2"/>
+  </g>
+  <!-- Text ring -->
+  <text x="50" y="24" font-size="6.5" font-family="'Noto Sans', sans-serif" font-weight="700" fill="#0f3a68" text-anchor="middle">महाराष्ट्र शासन</text>
+  <text x="50" y="80" font-size="5.5" font-family="'Noto Sans', sans-serif" font-weight="600" fill="#1b7a43" text-anchor="middle">नागपूर जिल्हा परिषद</text>
+</svg>

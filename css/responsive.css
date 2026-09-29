@@ -1,0 +1,281 @@
+/* ==========================================================================
+   Responsive Breakpoints & Mobile Optimization
+   ========================================================================== */
+
+/* Large Tablets & Small Laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .hero-image-card img {
+    height: 320px;
+  }
+
+  .info-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .classes-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .facilities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .activities-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .contact-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .about-intro-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Tablets & Mobile Navigation Conversion (max-width: 868px) */
+@media (max-width: 868px) {
+  .topbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .topbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .header-meta {
+    display: none;
+  }
+
+  .school-logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .brand-title-marathi {
+    font-size: 1.05rem;
+  }
+
+  .brand-title-en {
+    font-size: 1rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.75rem;
+  }
+
+  /* Mobile Navigation Drawer */
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar {
+    padding: 0.5rem 0;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100vh;
+    background: var(--primary-dark);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 5rem 1.5rem 2rem 1.5rem;
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1200;
+    overflow-y: auto;
+  }
+
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-link {
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    border-bottom: none;
+    border-left: 3px solid transparent;
+  }
+
+  .nav-link.active {
+    border-left-color: var(--saffron-light);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-close-btn {
+    display: block;
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .about-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vision-mission-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .approach-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .community-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .notice-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .notice-date-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    width: auto;
+  }
+
+  .notice-date-day {
+    font-size: 1.15rem;
+  }
+
+  .notice-action {
+    width: 100%;
+  }
+
+  .notice-action .btn {
+    width: 100%;
+  }
+
+  .notice-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .notice-search-box {
+    width: 100%;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .lightbox-prev {
+    left: 10px;
+  }
+  .lightbox-next {
+    right: 10px;
+  }
+}
+
+/* Mobile Phones (max-width: 576px) */
+@media (max-width: 576px) {
+  .section {
+    padding: 2.75rem 0;
+  }
+
+  .hero-section {
+    padding: 3rem 0;
+  }
+
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-lead {
+    font-size: 0.95rem;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
+  }
+
+  .info-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-info-strip {
+    margin-top: -1.5rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .classes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .facilities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .activities-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .ht-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .page-banner {
+    padding: 2.5rem 0 2rem 0;
+  }
+
+  .page-banner-title {
+    font-size: 1.65rem;
+  }
+}

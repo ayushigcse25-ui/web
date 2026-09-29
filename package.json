@@ -1,0 +1,19 @@
+{
+  "name": "zp-primary-school-ghorad",
+  "version": "1.0.0",
+  "description": "Official Web Portal & Backend API for Zila Parishad Primary School, Ghorad",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "node backend/server.js",
+    "dev": "npm --prefix backend run dev",
+    "test": "npm --prefix backend test"
+  },
+  "keywords": [
+    "school",
+    "portal",
+    "express",
+    "mongodb-atlas"
+  ],
+  "author": "Zila Parishad Primary School, Ghorad",
+  "license": "ISC"
+}

@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="crestGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f3a68" />
+      <stop offset="100%" stop-color="#1e5f9a" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Ring with Gold Border -->
+  <circle cx="60" cy="60" r="56" fill="#ffffff" stroke="url(#goldGrad)" stroke-width="4" />
+  <circle cx="60" cy="60" r="50" fill="url(#crestGrad)" />
+
+  <!-- Tricolor Arc Ribbons -->
+  <path d="M 24 60 A 36 36 0 0 1 96 60" fill="none" stroke="#ff9933" stroke-width="3" opacity="0.9" />
+  <circle cx="60" cy="60" r="36" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6" />
+  <path d="M 24 60 A 36 36 0 0 0 96 60" fill="none" stroke="#138808" stroke-width="3" opacity="0.9" />
+
+  <!-- Sun Rays of Knowledge -->
+  <g stroke="#fbbf24" stroke-width="2" stroke-linecap="round" opacity="0.8">
+    <line x1="60" y1="28" x2="60" y2="23" />
+    <line x1="46" y1="33" x2="42" y2="29" />
+    <line x1="74" y1="33" x2="78" y2="29" />
+    <line x1="36" y1="44" x2="31" y2="42" />
+    <line x1="84" y1="44" x2="89" y2="42" />
+  </g>
+
+  <!-- Rising Sun Behind Book -->
+  <path d="M 44 46 Q 60 36 76 46 Z" fill="#fbbf24" opacity="0.9" />
+
+  <!-- Open Book Symbol of Education -->
+  <g fill="#ffffff">
+    <!-- Left Page -->
+    <path d="M 32 64 Q 46 60 59 65 L 59 79 Q 46 74 32 78 Z" fill="#ffffff" />
+    <!-- Right Page -->
+    <path d="M 88 64 Q 74 60 61 65 L 61 79 Q 74 74 88 78 Z" fill="#f1f5f9" />
+    <!-- Book Spine -->
+    <path d="M 59 65 L 61 65 L 61 80 L 59 80 Z" fill="#cbd5e1" />
+  </g>
+
+  <!-- Knowledge Lamp / Diya / Flame atop Book -->
+  <path d="M 60 47 C 56 52 56 55 60 58 C 64 55 64 52 60 47 Z" fill="#f59e0b" />
+  <path d="M 60 50 C 58 53 58 55 60 57 C 62 55 62 53 60 50 Z" fill="#ef4444" />
+
+  <!-- Educational Motto Banner / Text Base -->
+  <path d="M 28 88 Q 60 82 92 88 L 88 95 Q 60 89 32 95 Z" fill="#f59e0b" />
+  <text x="60" y="93" font-size="5" font-family="'Noto Sans', sans-serif" font-weight="bold" fill="#0f3a68" text-anchor="middle">सा विद्या या विमुक्तये</text>
+
+  <!-- School Name around top -->
+  <text x="60" y="20" font-size="6" font-family="'Noto Sans', sans-serif" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">जि. प. प्राथमिक शाळा घोरड</text>
+</svg>

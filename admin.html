@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Admin Dashboard | ZP Primary School, Ghorad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/school_logo.svg">
+  <style>
+    /* ── Reset & Base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --surface2: #273549;
+      --border: #334155;
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-glow: rgba(59,130,246,0.2);
+      --green: #22c55e;
+      --green-bg: rgba(34,197,94,0.12);
+      --yellow: #eab308;
+      --yellow-bg: rgba(234,179,8,0.12);
+      --red: #ef4444;
+      --red-bg: rgba(239,68,68,0.12);
+      --orange: #f97316;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --radius: 10px;
+      --shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    html { font-size: 15px; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* ── Login Screen ── */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: radial-gradient(ellipse at 60% 40%, rgba(59,130,246,0.08) 0%, transparent 65%),
+                  radial-gradient(ellipse at 20% 80%, rgba(99,102,241,0.06) 0%, transparent 60%),
+                  var(--bg);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+    .login-logo img { width: 44px; height: 44px; }
+    .login-logo-text h2 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .login-logo-text p { font-size: 0.75rem; color: var(--text-muted); }
+
+    .login-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+    .login-subtitle { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.75rem; }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.4rem;
+    }
+    .form-group input {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.7rem 0.9rem;
+      font-size: 0.95rem;
+      color: var(--text);
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+    }
+    .login-btn:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .login-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .login-error {
+      display: none;
+      background: var(--red-bg);
+      border: 1px solid var(--red);
+      color: #fca5a5;
+      padding: 0.6rem 0.9rem;
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+    .login-error.visible { display: block; }
+
+    /* ── Dashboard Layout ── */
+    #dashboard { display: none; }
+
+    .dash-sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 240px;
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 1.25rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .sidebar-logo img { width: 32px; height: 32px; }
+    .sidebar-logo span {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .sidebar-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      background: var(--primary-glow);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-weight: 600;
+    }
+
+    .sidebar-nav { flex: 1; padding: 0.75rem 0; }
+    .nav-section-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      padding: 0.5rem 1rem 0.25rem;
+    }
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      width: 100%;
+      padding: 0.6rem 1rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 0;
+      transition: all 0.15s;
+      text-align: left;
+    }
+    .nav-btn:hover { background: var(--surface2); color: var(--text); }
+    .nav-btn.active {
+      background: var(--primary-glow);
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .nav-btn .icon { font-size: 1rem; width: 20px; text-align: center; }
+
+    .sidebar-footer {
+      padding: 0.75rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .admin-info { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .admin-info span { color: var(--primary); font-weight: 600; }
+    .logout-btn {
+      width: 100%;
+      padding: 0.5rem;
+      background: var(--red-bg);
+      border: 1px solid var(--red);
+      color: #fca5a5;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .logout-btn:hover { background: rgba(239,68,68,0.25); }
+
+    /* ── Main Content ── */
+    .dash-main {
+      margin-left: 240px;
+      min-height: 100vh;
+      padding: 1.5rem;
+    }
+
+    .dash-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+    .dash-topbar h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .dash-topbar p { font-size: 0.8rem; color: var(--text-muted); }
+
+    .db-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 4px 12px;
+    }
+    .db-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--text-dim);
+      transition: background 0.3s;
+    }
+    .db-dot.connected { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .db-dot.error { background: var(--red); }
+
+    /* Stat Cards */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.25rem;
+      transition: border-color 0.2s;
+    }
+    .stat-card:hover { border-color: var(--primary); }
+    .stat-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.4rem; }
+    .stat-value { font-size: 2rem; font-weight: 700; color: var(--text); line-height: 1; }
+    .stat-sub { font-size: 0.72rem; color: var(--text-dim); margin-top: 0.25rem; }
+    .stat-card.green .stat-value { color: var(--green); }
+    .stat-card.yellow .stat-value { color: var(--yellow); }
+    .stat-card.red .stat-value { color: var(--red); }
+    .stat-card.blue .stat-value { color: var(--primary); }
+
+    /* Panels */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .panel-header h2 { font-size: 1rem; font-weight: 700; }
+    .panel-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+
+    /* Search/Filter inputs */
+    .search-input, .filter-select {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.82rem;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-input:focus, .filter-select:focus { border-color: var(--primary); }
+    .search-input { min-width: 180px; }
+    .filter-select { cursor: pointer; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-success { background: var(--green-bg); color: var(--green); border-color: var(--green); }
+    .btn-success:hover { background: rgba(34,197,94,0.25); }
+    .btn-danger { background: var(--red-bg); color: #fca5a5; border-color: var(--red); }
+    .btn-danger:hover { background: rgba(239,68,68,0.25); }
+    .btn-ghost { background: transparent; color: var(--text-muted); border-color: var(--border); }
+    .btn-ghost:hover { background: var(--surface2); color: var(--text); }
+    .btn-sm { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.84rem; }
+    th {
+      text-align: left;
+      padding: 0.6rem 1rem;
+      background: var(--surface2);
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid rgba(51,65,85,0.5);
+      vertical-align: middle;
+      color: var(--text);
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-new { background: var(--primary-glow); color: var(--primary); }
+    .badge-read { background: rgba(148,163,184,0.15); color: var(--text-muted); }
+    .badge-progress { background: var(--yellow-bg); color: var(--yellow); }
+    .badge-resolved { background: var(--green-bg); color: var(--green); }
+    .badge-archived { background: rgba(100,116,139,0.15); color: var(--text-dim); }
+
+    /* Loading/empty states */
+    .loading-row td, .empty-row td {
+      text-align: center;
+      padding: 2.5rem;
+      color: var(--text-muted);
+    }
+
+    /* ── Tabs (panel sections) ── */
+    .tab-section { display: none; }
+    .tab-section.active { display: block; }
+
+    /* ── Notice Form ── */
+    .notice-form {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+    .notice-form .full-width { grid-column: 1 / -1; }
+    .notice-form label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 0.3rem;
+    }
+    .notice-form input, .notice-form textarea, .notice-form select {
+      width: 100%;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.875rem;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .notice-form input:focus, .notice-form textarea:focus, .notice-form select:focus {
+      border-color: var(--primary);
+    }
+    .notice-form textarea { resize: vertical; min-height: 80px; }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s;
+      z-index: 9999;
+      pointer-events: none;
+      max-width: 340px;
+    }
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { background: var(--green-bg); border: 1px solid var(--green); color: #86efac; }
+    #toast.error { background: var(--red-bg); border: 1px solid var(--red); color: #fca5a5; }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .page-btns { display: flex; gap: 0.35rem; }
+
+    /* Status select in table */
+    .status-select {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 3px 6px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    @media (max-width: 768px) {
+      .dash-sidebar { width: 100%; height: auto; position: relative; }
+      .dash-main { margin-left: 0; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .notice-form { grid-template-columns: 1fr; }
+      .notice-form .full-width { grid-column: 1; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     LOGIN SCREEN
+════════════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">
+      <img src="assets/icons/school_logo.svg" alt="School Logo">
+      <div class="login-logo-text">
+        <h2>ZP Primary School, Ghorad</h2>
+        <p>Zilla Parishad Nagpur — Administration</p>
+      </div>
+    </div>
+
+    <h1 class="login-title">Admin Login</h1>
+    <p class="login-subtitle">Sign in to access the school administration dashboard.</p>
+
+    <form id="loginForm" autocomplete="off">
+      <div class="form-group">
+        <label for="loginUser">Username</label>
+        <input type="text" id="loginUser" name="username" autocomplete="username" placeholder="admin" required>
+      </div>
+      <div class="form-group">
+        <label for="loginPass">Password</label>
+        <input type="password" id="loginPass" name="password" autocomplete="current-password" placeholder="••••••••" required>
+      </div>
+      <button type="submit" class="login-btn" id="loginBtn">Sign In →</button>
+      <div class="login-error" id="loginError"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     DASHBOARD
+════════════════════════════════════════ -->
+<div id="dashboard">
+
+  <!-- Sidebar -->
+  <aside class="dash-sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="assets/icons/school_logo.svg" alt="Logo">
+        <span>ZP School<br>Admin Panel</span>
+      </div>
+      <span class="sidebar-badge">🔒 Secure</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <button class="nav-btn active" onclick="showTab('overview')" id="navOverview">
+        <span class="icon">📊</span> Dashboard
+      </button>
+
+      <div class="nav-section-label" style="margin-top:0.5rem;">Manage</div>
+      <button class="nav-btn" onclick="showTab('inquiries')" id="navInquiries">
+        <span class="icon">📬</span> Inquiries
+        <span id="newBadge" style="margin-left:auto; background:var(--primary); color:#fff; border-radius:99px; padding:1px 7px; font-size:0.7rem; display:none;"></span>
+      </button>
+      <button class="nav-btn" onclick="showTab('notices')" id="navNotices">
+        <span class="icon">📋</span> Notice Board
+      </button>
+
+      <div class="nav-section-label" style="margin-top:0.5rem;">School</div>
+      <button class="nav-btn" onclick="window.open('index.html','_blank')">
+        <span class="icon">🌐</span> View Website
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="admin-info">Logged in as <span id="adminName">admin</span></div>
+      <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div>
+        <h1 id="pageTitle">Dashboard Overview</h1>
+        <p id="pageSubtitle">ZP Primary School, Ghorad — Administration</p>
+      </div>
+      <div class="db-status">
+        <div class="db-dot" id="dbDot"></div>
+        <span id="dbStatus">Checking...</span>
+      </div>
+    </div>
+
+    <!-- ── OVERVIEW TAB ── -->
+    <div class="tab-section active" id="tabOverview">
+      <div class="stat-grid" id="statGrid">
+        <div class="stat-card blue">
+          <div class="stat-label">Total Inquiries</div>
+          <div class="stat-value" id="statTotal">—</div>
+          <div class="stat-sub">All time</div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-label">New / Unread</div>
+          <div class="stat-value" id="statNew">—</div>
+          <div class="stat-sub">Awaiting response</div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-label">In Progress</div>
+          <div class="stat-value" id="statProgress">—</div>
+          <div class="stat-sub">Being handled</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-label">Resolved</div>
+          <div class="stat-value" id="statResolved">—</div>
+          <div class="stat-sub">Completed</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-label">Active Notices</div>
+          <div class="stat-value" id="statNotices">—</div>
+          <div class="stat-sub">Published on website</div>
+        </div>
+      </div>
+
+      <!-- Recent Inquiries Preview -->
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Recent Inquiries</h2>
+          <button class="btn btn-ghost btn-sm" onclick="showTab('inquiries')">View All →</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th><th>Phone</th><th>Category</th><th>Status</th><th>Date</th>
+              </tr>
+            </thead>
+            <tbody id="recentTableBody">
+              <tr class="loading-row"><td colspan="5">Loading...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── INQUIRIES TAB ── -->
+    <div class="tab-section" id="tabInquiries">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>All Inquiries</h2>
+          <div class="panel-actions">
+            <input type="text" class="search-input" id="inqSearch" placeholder="Search name, phone, message..." oninput="debounce(loadInquiries, 350)()">
+            <select class="filter-select" id="inqStatusFilter" onchange="loadInquiries()">
+              <option value="">All Status</option>
+              <option value="new">New</option>
+              <option value="read">Read</option>
+              <option value="in_progress">In Progress</option>
+              <option value="resolved">Resolved</option>
+              <option value="archived">Archived</option>
+            </select>
+            <button class="btn btn-ghost btn-sm" onclick="loadInquiries()">↻ Refresh</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th><th>Name</th><th>Phone</th><th>Category</th><th>Message</th><th>Status</th><th>Date</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inqTableBody">
+              <tr class="loading-row"><td colspan="8">Loading inquiries...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination" id="inqPagination" style="display:none">
+          <span id="inqPagInfo"></span>
+          <div class="page-btns" id="inqPageBtns"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── NOTICES TAB ── -->
+    <div class="tab-section" id="tabNotices">
+      <div class="panel" style="margin-bottom:1.25rem;">
+        <div class="panel-header">
+          <h2>📢 Publish New Notice</h2>
+        </div>
+        <form class="notice-form" id="noticeForm" onsubmit="submitNotice(event)">
+          <div>
+            <label>Notice Title *</label>
+            <input type="text" id="nTitle" placeholder="e.g. Admissions Open for Class 1" required maxlength="200">
+          </div>
+          <div>
+            <label>Category *</label>
+            <select id="nCategory" required>
+              <option value="academic">Academic</option>
+              <option value="admission">Admissions</option>
+              <option value="midday">PM POSHAN</option>
+              <option value="celebration">Celebrations</option>
+              <option value="gov">Govt Circular</option>
+              <option value="holiday">Holidays</option>
+              <option value="general">General</option>
+            </select>
+          </div>
+          <div class="full-width">
+            <label>Short Description * (shown in list)</label>
+            <input type="text" id="nDesc" placeholder="Brief summary of the notice..." required maxlength="500">
+          </div>
+          <div class="full-width">
+            <label>Full Content (shown when expanded)</label>
+            <textarea id="nContent" placeholder="Detailed notice content..." rows="4" maxlength="5000"></textarea>
+          </div>
+          <div>
+            <label>Reference Number (optional)</label>
+            <input type="text" id="nRef" placeholder="e.g. ZP-GHD/ACAD/2026/01" maxlength="100">
+          </div>
+          <div style="display:flex; align-items:flex-end; gap:0.5rem;">
+            <button type="submit" class="btn btn-primary" id="noticeSubmitBtn">📤 Publish Notice</button>
+            <button type="button" class="btn btn-ghost" onclick="document.getElementById('noticeForm').reset()">Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Published Notices</h2>
+          <button class="btn btn-ghost btn-sm" onclick="loadNotices()">↻ Refresh</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Title</th><th>Category</th><th>Ref No</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="noticeTableBody">
+              <tr class="loading-row"><td colspan="6">Loading notices...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════
+   CONFIG
+════════════════════════════════════════ */
+const API = window.API_BASE_URL
+  ? window.API_BASE_URL.replace(/\/+$/, '')
+  : (window.location.port === '5000' ? '' : 'http://localhost:5000');
+
+let TOKEN = localStorage.getItem('zp_admin_token') || '';
+let currentInqPage = 1;
+
+/* ════════════════════════════════════════
+   HELPERS
+════════════════════════════════════════ */
+function toast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `show ${type}`;
+  clearTimeout(t._tid);
+  t._tid = setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  const d = new Date(iso);
+  return d.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+}
+
+function statusBadge(s) {
+  const map = {
+    new: 'badge-new', read: 'badge-read',
+    in_progress: 'badge-progress', resolved: 'badge-resolved', archived: 'badge-archived'
+  };
+  const label = { new: 'New', read: 'Read', in_progress: 'In Progress', resolved: 'Resolved', archived: 'Archived' };
+  return `<span class="badge ${map[s] || 'badge-read'}">${label[s] || s}</span>`;
+}
+
+const catLabel = {
+  academic:'Academic', admission:'Admissions', midday:'PM POSHAN',
+  celebration:'Celebrations', gov:'Govt Circular', holiday:'Holidays', general:'General'
+};
+
+function debounce(fn, delay) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), delay);
+  };
+}
+
+async function apiFetch(path, options = {}) {
+  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+  if (TOKEN) headers['Authorization'] = `Bearer ${TOKEN}`;
+  const res = await fetch(`${API}${path}`, { ...options, headers });
+  const data = await res.json().catch(() => ({}));
+  return { ok: res.ok, status: res.status, data };
+}
+
+/* ════════════════════════════════════════
+   AUTH
+════════════════════════════════════════ */
+async function checkExistingToken() {
+  if (!TOKEN) return showLogin();
+  const { ok, data } = await apiFetch('/api/admin/verify');
+  if (ok && data.valid) {
+    showDashboard(data.admin?.username || 'admin');
+  } else {
+    TOKEN = '';
+    localStorage.removeItem('zp_admin_token');
+    showLogin();
+  }
+}
+
+function showLogin() {
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+}
+
+function showDashboard(username) {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  document.getElementById('adminName').textContent = username || 'admin';
+  checkDbStatus();
+  loadOverview();
+}
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  const errEl = document.getElementById('loginError');
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value;
+
+  errEl.classList.remove('visible');
+  btn.disabled = true;
+  btn.textContent = 'Signing in...';
+
+  const { ok, data } = await apiFetch('/api/admin/login', {
+    method: 'POST',
+    body: JSON.stringify({ username, password })
+  });
+
+  btn.disabled = false;
+  btn.textContent = 'Sign In →';
+
+  if (ok && data.token) {
+    TOKEN = data.token;
+    localStorage.setItem('zp_admin_token', TOKEN);
+    showDashboard(username);
+  } else {
+    errEl.textContent = data.message || 'Login failed. Check your credentials.';
+    errEl.classList.add('visible');
+  }
+});
+
+function logout() {
+  TOKEN = '';
+  localStorage.removeItem('zp_admin_token');
+  showLogin();
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+}
+
+/* ════════════════════════════════════════
+   DB STATUS
+════════════════════════════════════════ */
+async function checkDbStatus() {
+  const dot = document.getElementById('dbDot');
+  const txt = document.getElementById('dbStatus');
+  try {
+    const { ok, data } = await apiFetch('/api/health');
+    if (ok) {
+      dot.className = 'db-dot connected';
+      txt.textContent = 'DB Connected';
+    } else {
+      dot.className = 'db-dot error';
+      txt.textContent = 'DB Error';
+    }
+  } catch {
+    dot.className = 'db-dot error';
+    txt.textContent = 'Server Offline';
+  }
+}
+
+/* ════════════════════════════════════════
+   TABS
+════════════════════════════════════════ */
+function showTab(tab) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+  document.getElementById(`tab${capitalize(tab)}`).classList.add('active');
+  document.getElementById(`nav${capitalize(tab)}`).classList.add('active');
+
+  const titles = { overview: 'Dashboard Overview', inquiries: 'Manage Inquiries', notices: 'Notice Board' };
+  document.getElementById('pageTitle').textContent = titles[tab] || 'Admin';
+
+  if (tab === 'inquiries') loadInquiries();
+  if (tab === 'notices') loadNotices();
+}
+
+function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+/* ════════════════════════════════════════
+   OVERVIEW
+════════════════════════════════════════ */
+async function loadOverview() {
+  const { ok, data } = await apiFetch('/api/inquiries?limit=5');
+  if (!ok) {
+    if (data.code === 'TOKEN_EXPIRED') { logout(); return; }
+    return;
+  }
+
+  const inqs = data.data || {};
+  const all = inqs.inquiries || [];
+
+  document.getElementById('statTotal').textContent = inqs.total ?? '—';
+  const newCount = all.filter(i => i.status === 'new').length;
+  document.getElementById('statNew').textContent = newCount;
+  document.getElementById('statProgress').textContent = all.filter(i => i.status === 'in_progress').length;
+  document.getElementById('statResolved').textContent = all.filter(i => i.status === 'resolved').length;
+
+  if (newCount > 0) {
+    const badge = document.getElementById('newBadge');
+    badge.textContent = newCount;
+    badge.style.display = 'inline';
+  }
+
+  // Load notice count
+  const nr = await apiFetch('/api/notices?limit=1');
+  if (nr.ok) document.getElementById('statNotices').textContent = nr.data.count ?? 0;
+
+  // Recent table
+  const tbody = document.getElementById('recentTableBody');
+  if (!all.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="5">No inquiries yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = all.slice(0, 5).map(i => `
+    <tr>
+      <td>${i.name}</td>
+      <td>${i.phone}</td>
+      <td>${i.category || '—'}</td>
+      <td>${statusBadge(i.status)}</td>
+      <td>${formatDate(i.createdAt)}</td>
+    </tr>
+  `).join('');
+}
+
+/* ════════════════════════════════════════
+   INQUIRIES
+════════════════════════════════════════ */
+async function loadInquiries() {
+  const search = document.getElementById('inqSearch')?.value || '';
+  const status = document.getElementById('inqStatusFilter')?.value || '';
+  let url = `/api/inquiries?page=${currentInqPage}&limit=15`;
+  if (search) url += `&search=${encodeURIComponent(search)}`;
+  if (status) url += `&status=${status}`;
+
+  const tbody = document.getElementById('inqTableBody');
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="8">Loading...</td></tr>';
+
+  const { ok, data } = await apiFetch(url);
+  if (!ok) {
+    if (data.code === 'TOKEN_EXPIRED') { logout(); return; }
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">Failed to load inquiries.</td></tr>';
+    return;
+  }
+
+  const { total, page, pages, inquiries } = data.data || {};
+
+  if (!inquiries || !inquiries.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">No inquiries found.</td></tr>';
+    document.getElementById('inqPagination').style.display = 'none';
+    return;
+  }
+
+  tbody.innerHTML = inquiries.map((inq, i) => `
+    <tr id="row-${inq._id}">
+      <td style="color:var(--text-dim)">${(page - 1) * 15 + i + 1}</td>
+      <td><strong>${inq.name}</strong></td>
+      <td>${inq.phone}</td>
+      <td><span style="font-size:0.75rem">${inq.category || '—'}</span></td>
+      <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text-muted)" title="${inq.message}">
+        ${inq.message}
+      </td>
+      <td>
+        <select class="status-select" onchange="updateStatus('${inq._id}', this.value)">
+          ${['new','read','in_progress','resolved','archived'].map(s =>
+            `<option value="${s}" ${inq.status === s ? 'selected' : ''}>${
+              {new:'New',read:'Read',in_progress:'In Progress',resolved:'Resolved',archived:'Archived'}[s]
+            }</option>`
+          ).join('')}
+        </select>
+      </td>
+      <td style="font-size:0.75rem; white-space:nowrap; color:var(--text-dim)">${formatDate(inq.createdAt)}</td>
+      <td>
+        <button class="btn btn-danger btn-sm" onclick="deleteInquiry('${inq._id}')">🗑</button>
+      </td>
+    </tr>
+  `).join('');
+
+  // Pagination
+  const pag = document.getElementById('inqPagination');
+  const info = document.getElementById('inqPagInfo');
+  const btns = document.getElementById('inqPageBtns');
+  pag.style.display = 'flex';
+  info.textContent = `Page ${page} of ${pages} · ${total} total`;
+  btns.innerHTML = `
+    <button class="btn btn-ghost btn-sm" onclick="changePage(${page - 1})" ${page <= 1 ? 'disabled' : ''}>‹ Prev</button>
+    <button class="btn btn-ghost btn-sm" onclick="changePage(${page + 1})" ${page >= pages ? 'disabled' : ''}>Next ›</button>
+  `;
+}
+
+function changePage(p) { currentInqPage = p; loadInquiries(); }
+
+async function updateStatus(id, status) {
+  const { ok, data } = await apiFetch(`/api/inquiries/${id}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status })
+  });
+  if (ok) toast(`Status updated to "${status}"`);
+  else toast(data.message || 'Update failed', 'error');
+}
+
+async function deleteInquiry(id) {
+  if (!confirm('Delete this inquiry? This cannot be undone.')) return;
+  // We'll do a soft archive instead of delete (safer)
+  const { ok } = await apiFetch(`/api/inquiries/${id}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status: 'archived' })
+  });
+  if (ok) {
+    toast('Inquiry archived.');
+    loadInquiries();
+  } else {
+    toast('Failed to archive.', 'error');
+  }
+}
+
+/* ════════════════════════════════════════
+   NOTICES
+════════════════════════════════════════ */
+async function loadNotices() {
+  const tbody = document.getElementById('noticeTableBody');
+  tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Loading...</td></tr>';
+
+  const { ok, data } = await apiFetch('/api/notices/all');
+  if (!ok) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="6">Failed to load notices.</td></tr>';
+    return;
+  }
+
+  const notices = data.data?.notices || [];
+  if (!notices.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="6">No notices published yet. Use the form above to add one.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = notices.map(n => `
+    <tr>
+      <td><strong>${n.title}</strong></td>
+      <td><span style="font-size:0.75rem">${catLabel[n.category] || n.category}</span></td>
+      <td style="font-size:0.75rem; color:var(--text-dim)">${n.refNo || '—'}</td>
+      <td>
+        <button class="btn btn-sm ${n.isActive ? 'btn-success' : 'btn-ghost'}"
+          onclick="toggleNotice('${n._id}', ${!n.isActive})">
+          ${n.isActive ? '✅ Active' : '⏸ Hidden'}
+        </button>
+      </td>
+      <td style="font-size:0.75rem; white-space:nowrap; color:var(--text-dim)">${formatDate(n.createdAt)}</td>
+      <td>
+        <button class="btn btn-danger btn-sm" onclick="deleteNotice('${n._id}')">🗑 Delete</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function submitNotice(e) {
+  e.preventDefault();
+  const btn = document.getElementById('noticeSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Publishing...';
+
+  const payload = {
+    title: document.getElementById('nTitle').value.trim(),
+    description: document.getElementById('nDesc').value.trim(),
+    fullContent: document.getElementById('nContent').value.trim(),
+    category: document.getElementById('nCategory').value,
+    refNo: document.getElementById('nRef').value.trim()
+  };
+
+  const { ok, data } = await apiFetch('/api/notices', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+
+  btn.disabled = false;
+  btn.textContent = '📤 Publish Notice';
+
+  if (ok) {
+    toast('Notice published successfully! ✅');
+    document.getElementById('noticeForm').reset();
+    loadNotices();
+  } else {
+    toast(data.message || 'Failed to publish notice.', 'error');
+  }
+}
+
+async function toggleNotice(id, isActive) {
+  const { ok } = await apiFetch(`/api/notices/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ isActive })
+  });
+  if (ok) { toast(isActive ? 'Notice set to Active.' : 'Notice hidden.'); loadNotices(); }
+  else toast('Update failed.', 'error');
+}
+
+async function deleteNotice(id) {
+  if (!confirm('Permanently delete this notice?')) return;
+  const { ok } = await apiFetch(`/api/notices/${id}`, { method: 'DELETE' });
+  if (ok) { toast('Notice deleted.'); loadNotices(); }
+  else toast('Failed to delete.', 'error');
+}
+
+/* ════════════════════════════════════════
+   INIT
+════════════════════════════════════════ */
+checkExistingToken();
+</script>
+</body>
+</html>
