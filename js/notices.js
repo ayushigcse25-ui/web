@@ -103,7 +103,7 @@ function getApiBaseUrl() {
   const port = window.location.port;
   if (port === '5000') return '';
   if (hostname === 'localhost' || hostname === '127.0.0.1' || window.location.protocol === 'file:' || !hostname) {
-    return 'http://localhost:5000';
+    return 'https://zp-school.onrender.com';
   }
   return '';
 }

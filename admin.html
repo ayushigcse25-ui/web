@@ -768,7 +768,7 @@
 ════════════════════════════════════════ */
 const API = window.API_BASE_URL
   ? window.API_BASE_URL.replace(/\/+$/, '')
-  : (window.location.port === '5000' ? '' : 'http://localhost:5000');
+  : (window.location.port === '5000' ? '' : 'https://zp-school.onrender.com');
 
 let TOKEN = localStorage.getItem('zp_admin_token') || '';
 let currentInqPage = 1;

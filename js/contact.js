@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ============================================================
 // FRONTEND API CONFIGURATION
-// For local development: Automatically connects to http://localhost:5000
+// For production: Automatically connects to https://zp-school.onrender.com
 // For production (e.g., Netlify/Vercel): Configure window.API_BASE_URL:
 // e.g. <script>window.API_BASE_URL = 'https://your-backend.onrender.com';</script>
 // ============================================================
@@ -30,7 +30,7 @@ function getApiBaseUrl() {
 
   // Local development fallback (e.g. VS Code Live Server on port 5500, Vite, file://)
   if (hostname === 'localhost' || hostname === '127.0.0.1' || window.location.protocol === 'file:' || !hostname) {
-    return 'http://localhost:5000';
+    return 'https://zp-school.onrender.com';
   }
 
   // Production fallback: relative path if same domain
